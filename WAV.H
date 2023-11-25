@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
+// --------------------------------
+// WAV 读写部分
+
 typedef struct _CHUNK_{
     long start; // 当前块的起始位置
     char id[4]; // 块的ID
@@ -39,6 +42,8 @@ int ReadFMT(rCHUNK ck,rFMT fmt,FILE* fp){
         fread(&fmt->ChannelMask,4,1,fp);
         fread(fmt->GUID,16,1,fp);
     }
+    fmt->BlockAlign = fmt->BitPerSample*fmt->NumChannels;
+    fmt->ByteRate = fmt->BlockAlign*fmt->SampleRate;
     return 0;
 }
 
@@ -117,5 +122,25 @@ int SaveWAV(FILE* fp,rCHUNK fmt,rCHUNK data){
     fwrite(&riff_size,4,1,fp);
     return 0;
 }
+
+int SeekData(FILE* fp,rCHUNK data){
+    return fseek(fp,data->start+8,SEEK_SET);
+}
+
+int Read_WAV_Data_RAW(FILE* fp,rCHUNK data,rFMT fmt,int start_block,unsigned int end_block,void* buffer){
+    if(!fp||!data||!buffer||!fmt) return -1;
+    SeekData(fp,data);
+    if(start_block>end_block||start_block>data->size) return 1;
+    fseek(fp,start_block*fmt->BlockAlign,SEEK_CUR);
+    fread(buffer,fmt->BlockAlign,end_block-start_block,fp);
+    return 0;
+}
+
+// --------------------------------
+// PCM处理部分
+
+
+
+
 
 #endif
