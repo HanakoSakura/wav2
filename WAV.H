@@ -1,6 +1,14 @@
 #ifndef __SAKURA_WAV__
 #define __SAKURA_WAV__ 1
 
+/*
+  * The code for this file follows WTFPL.
+  * (You can use it to do anything.)
+  * Coded by Karyna Sakura(Dark Devil)
+  * 
+  * 我们的虚拟歌姬的核心库之一 · One of the core libraries of our virtual singer.
+*/
+
 #include <stdio.h>
 #include <string.h>
 
@@ -135,12 +143,5 @@ int Read_WAV_Data_RAW(FILE* fp,rCHUNK data,rFMT fmt,int start_block,unsigned int
     fread(buffer,fmt->BlockAlign,end_block-start_block,fp);
     return 0;
 }
-
-// --------------------------------
-// PCM处理部分
-
-
-
-
 
 #endif
