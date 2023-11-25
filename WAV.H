@@ -50,7 +50,7 @@ int ReadFMT(rCHUNK ck,rFMT fmt,FILE* fp){
         fread(&fmt->ChannelMask,4,1,fp);
         fread(fmt->GUID,16,1,fp);
     }
-    fmt->BlockAlign = fmt->BitPerSample*fmt->NumChannels;
+    fmt->BlockAlign = fmt->BitPerSample*fmt->NumChannels/8;
     fmt->ByteRate = fmt->BlockAlign*fmt->SampleRate;
     return 0;
 }

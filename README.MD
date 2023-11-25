@@ -1,6 +1,6 @@
-# WAV2 つすのねね WAV Library
+# WAV2 - つすのねね WAV Library
 
-Useless.
+Useless. · 一个小小的WAV读写库
 
 ## Usage
 
