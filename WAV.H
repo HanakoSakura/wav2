@@ -55,7 +55,7 @@ int ReadFMT(rCHUNK ck,rFMT fmt,FILE* fp){
     return 0;
 }
 
-int InitChunk(rCHUNK ck,long start,char* id,unsigned int size,void* data){
+int InitChunk(rCHUNK ck,long start,const char* id,unsigned int size,void* data){
     if (!ck || !id) return -1;
     ck->start = start;
     memcpy(ck->id,id,4);
@@ -135,10 +135,11 @@ int SeekData(FILE* fp,rCHUNK data){
     return fseek(fp,data->start+8,SEEK_SET);
 }
 
+// Hack:它可能不工作,临时替代方案
 int Read_WAV_Data_RAW(FILE* fp,rCHUNK data,rFMT fmt,int start_block,unsigned int end_block,void* buffer){
     if(!fp||!data||!buffer||!fmt) return -1;
     SeekData(fp,data);
-    if(start_block>end_block||start_block>data->size) return 1;
+    if(start_block>end_block||start_block>data->size/fmt->BlockAlign) return 1;
     fseek(fp,start_block*fmt->BlockAlign,SEEK_CUR);
     fread(buffer,fmt->BlockAlign,end_block-start_block,fp);
     return 0;
