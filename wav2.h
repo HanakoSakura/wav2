@@ -121,7 +121,7 @@ void Load_WAV(const char* path,rWAV wav_t,void* data,unsigned int data_size){
     Read_Data(&wav->data_chunk,data,data_size,fp);
 }
 
-void Save_WAV(char* path,rWAV wav_t,void* data,unsigned int data_size,unsigned int sr){
+void Save_WAV(const char* path,rWAV wav_t,void* data,unsigned int data_size,unsigned int sr){
     if(!path||!data) return;
     rWAV wav;
     WAV twav;
