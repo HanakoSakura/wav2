@@ -119,6 +119,8 @@ void Load_WAV(const char* path,rWAV wav_t,void* data,unsigned int data_size){
     Read_FMT(&wav->fmt_chunk,&wav->fmt_data,fp);
     // Read Data;
     Read_Data(&wav->data_chunk,data,data_size,fp);
+
+    fclose(fp);
 }
 
 void Save_WAV(const char* path,rWAV wav_t,void* data,unsigned int data_size,unsigned int sr){
@@ -154,6 +156,8 @@ void Save_WAV(const char* path,rWAV wav_t,void* data,unsigned int data_size,unsi
     fwrite("data",4,1,fp);
     fwrite(&wav->data_chunk.size,4,1,fp);
     fwrite(data,1,data_size,fp);
+
+    fclose(fp);
 }
 
 #endif
